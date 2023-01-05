@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manufacturer;
+use Dflydev\DotAccessData\Data;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class ManufacturerController extends Controller
@@ -15,9 +17,10 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        $data = Manufacturer::all();
-
-        return response()->json($data);
+        $manufacturer = Manufacturer::all();
+        return response()->json([
+            'data' => $manufacturer
+        ]);
     }
 
     /**
@@ -28,7 +31,13 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $manufacturer = Manufacturer::create([
+            'uuid' => Uuid::uuid4()->toString(),
+            'nama_manufactur' => $request->nama_manufactur
+        ]);
+        return response()->json([
+            'data' => $manufacturer
+        ]);
     }
 
     /**
@@ -37,9 +46,10 @@ class ManufacturerController extends Controller
      * @param  \App\Models\Manufacturer  $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function show(Manufacturer $manufacturer)
+    public function show($data)
     {
-        //
+        $data = Manufacturer::all();
+        return response()->json($data);
     }
 
     /**
@@ -49,9 +59,14 @@ class ManufacturerController extends Controller
      * @param  \App\Models\Manufacturer  $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Manufacturer $manufacturer)
+    public function update(Request $request, $id)
     {
-        //
+        $data = ([
+            'nama_manufactur' => $request->nama_manufactur
+        ]);
+        echo 'data update';
+        Manufacturer::where(['uuid'=>$id])->update($data);
+        return response()->json($data);
     }
 
     /**
@@ -60,8 +75,8 @@ class ManufacturerController extends Controller
      * @param  \App\Models\Manufacturer  $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Manufacturer $manufacturer)
+    public function destroy($id)
     {
-        //
+        Manufacturer::where(['uuid'=>$id])->delete();
     }
 }
