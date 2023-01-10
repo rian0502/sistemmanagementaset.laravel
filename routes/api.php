@@ -52,6 +52,7 @@ Route::get('categories', [CategoriesController::class,'index']);
 Route::post('categories', [CategoriesController::class, 'store']);
 Route::get('categories/{id}', [CategoriesController::class, 'show']);
 Route::put('categories/{id}', [CategoriesController::class, 'update']);
+
 Route::delete('manufacturer/{id}', [manufacturerController::class, 'destroy']);
 Route::get('manufacturer', [ManufacturerController::class,'index']);
 Route::post('manufacturer', [ManufacturerController::class, 'store']);

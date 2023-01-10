@@ -35,9 +35,19 @@ class ManufacturerController extends Controller
             'uuid' => Uuid::uuid4()->toString(),
             'nama_manufactur' => $request->nama_manufactur
         ]);
-        return response()->json([
-            'data' => $manufacturer
-        ]);
+        if ($manufacturer) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil ditambahkan',
+                'data' => $manufacturer
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data gagal ditambahkan',
+                'data' => ''
+            ], 400);
+        }
     }
 
     /**
@@ -65,8 +75,21 @@ class ManufacturerController extends Controller
             'nama_manufactur' => $request->nama_manufactur
         ]);
         echo 'data update';
-        Manufacturer::where(['uuid'=>$id])->update($data);
-        return response()->json($data);
+        $update = Manufacturer::where(['uuid'=>$id])->update($data);
+        if ($update) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diubah',
+                'data' => $update
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data gagal diupdate',
+                'data' => ''
+            ], 400);
+        }
+        
     }
 
     /**
