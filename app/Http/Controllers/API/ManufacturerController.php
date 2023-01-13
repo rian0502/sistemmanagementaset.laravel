@@ -15,9 +15,14 @@ class ManufacturerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search = '')
     {
-        $manufacturer = Manufacturer::all();
+        if ($search != '') {
+            $manufacturer = Manufacturer::where('nama_manufactur', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            $manufacturer = Manufacturer::all();
+        }
+
         return response()->json([
             'data' => $manufacturer
         ]);

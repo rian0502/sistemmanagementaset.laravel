@@ -54,7 +54,7 @@ Route::get('categories/{id}', [CategoriesController::class, 'show']);
 Route::put('categories/{id}', [CategoriesController::class, 'update']);
 
 Route::delete('manufacturer/{id}', [manufacturerController::class, 'destroy']);
-Route::get('manufacturer', [ManufacturerController::class,'index']);
+Route::get('manufacturer/{search?}', [ManufacturerController::class,'index']);
 Route::post('manufacturer', [ManufacturerController::class, 'store']);
 Route::get('manufacturer/{id}', [ManufacturerController::class, 'show']);
 Route::put('manufacturer/{id}', [ManufacturerController::class, 'update']);
